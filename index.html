@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Roofing Pro</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+
+<div class="bg-white max-w-6xl mx-auto p-10 grid md:grid-cols-2 gap-10">
+<h1 class="text-5xl font-black">US Roofing Experts.<br>Built To Last.</h1>
+<p class="text-gray-600 mt-4">Free guesstimate $0, Inspection $149 once, Full Service $999+ one-time. Reusable template.</p>
+<img src="https://images.unsplash.com/photo-1632759145351-1d592919f522?w=800" class="rounded-2xl">
+</div>
+
+<section class="max-w-6xl mx-auto p-10">
+<h2 class="text-3xl font-bold text-center">Pricing - 3 Plans</h2>
+<div class="grid md:grid-cols-3 gap-6 mt-8">
+<div class="bg-white p-6 rounded-2xl border">
+<h3 class="font-bold">Free Guesstimate</h3>
+<p class="text-3xl font-black">$0 once</p>
+<p class="text-sm text-gray-500">Whop Leads API</p>
+<div class="mt-3 p-2 bg-gray-100 text-xs rounded">data-whop-lead="guesstimate"</div>
+</div>
+<div class="bg-black text-white p-6 rounded-2xl">
+<h3 class="font-bold">Inspection Deposit</h3>
+<p class="text-3xl font-black">$149 once</p>
+<div class="mt-3 p-2 bg-white text-black text-xs rounded">Whop Payment Element<br>data-whop-payment-plan="deposit_149_once"</div>
+<button onclick="whop.track('deposit_paid')" class="w-full mt-4 bg-white text-black py-2 rounded">Pay</button>
+</div>
+<div class="bg-white p-6 rounded-2xl border">
+<h3 class="font-bold">Full Roof Service</h3>
+<p class="text-3xl font-black">$999+ one-time</p>
+<div class="mt-3 p-2 bg-gray-100 text-xs rounded">Whop Pay Element<br>data-whop-pay="full_service_once"</div>
+<button onclick="whop.track('service_viewed')" class="w-full mt-4 bg-black text-white py-2 rounded">Book</button>
+</div>
+</div>
+</section>
+
+<section id="estimate" class="bg-white p-10">
+<div class="max-w-2xl mx-auto">
+<h2 class="text-3xl font-bold">Request Estimate - Whop Leads API</h2>
+<form id="leadForm" class="grid gap-4 mt-6">
+<input id="name" required placeholder="Full Name" class="border p-3 rounded-xl">
+<input id="phone" required placeholder="Phone" class="border p-3 rounded-xl">
+<input id="address" required placeholder="Property Address" class="border p-3 rounded-xl">
+<textarea id="details" placeholder="Roof details" class="border p-3 rounded-xl"></textarea>
+<button class="bg-black text-white py-3 rounded-xl">Submit to Whop Leads API</button>
+<p id="status" class="text-sm"></p>
+</form>
+</div>
+</section>
+
+<script>
+function track(e,d={}){console.log(e,d); if(window.whop) whop.track(e,d);}
+window.whop={track:track};
+document.getElementById('leadForm').addEventListener('submit',async(e)=>{
+e.preventDefault();
+track('estimate_started',{source:'form'});
+const payload={name:document.getElementById('name').value,phone:document.getElementById('phone').value,address:document.getElementById('address').value,details:document.getElementById('details').value};
+document.getElementById('status').innerText='Lead sent to Whop Leads API (demo - add API key)';
+console.log('LEAD API PAYLOAD -> https://api.whop.com/api/v2/leads', payload);
+});
+</script>
+<footer class="p-10 text-center text-xs text-gray-400">Reusable for any US roofing company. Built on Whop Websites whop.site. Tracking: estimate_started, deposit_paid, service_viewed</footer>
+</body>
+</html>
